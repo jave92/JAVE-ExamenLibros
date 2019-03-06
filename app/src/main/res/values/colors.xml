@@ -8,4 +8,5 @@
     <color name="colorError">#FF0000</color>
     <color name="pressed">#2E7D32</color>
     <color name="white">#FFFFFF</color>
+    <color name="translucent_grey">#80363636</color>
 </resources>

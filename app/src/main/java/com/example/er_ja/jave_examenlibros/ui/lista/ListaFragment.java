@@ -4,15 +4,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import com.example.er_ja.jave_examenlibros.R;
+import com.example.er_ja.jave_examenlibros.RecyclerViewOnItemClickListener;
 import com.example.er_ja.jave_examenlibros.data.RepositoryImpl;
 import com.example.er_ja.jave_examenlibros.data.local.entity.Libro;
 import com.example.er_ja.jave_examenlibros.databinding.ListaFragmentBinding;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
@@ -26,6 +30,8 @@ public class ListaFragment extends Fragment {
     ListaFragmentBinding b;
 
     private ListaFragmentAdapter listAdapter;
+    private BottomSheetBehavior<NestedScrollView> bsb;
+    private NestedScrollView panel;
 
     public ListaFragment() {
     }
@@ -50,25 +56,30 @@ public class ListaFragment extends Fragment {
     }
 
     private void observeLista() {
+        setHasOptionsMenu(true);
         vm.getLibros().observe(this, lista -> {
             listAdapter.submitList(lista);
+            if (lista.isEmpty()) {
+                b.lstLista.setVisibility(View.GONE);
+                b.lblEmptyView.setVisibility(View.VISIBLE);
+            }
+            else {
+                b.lstLista.setVisibility(View.VISIBLE);
+                b.lblEmptyView.setVisibility(View.GONE);
+            }
         });
     }
 
     private void setupViews() {
-        listAdapter = new ListaFragmentAdapter();
+        panel = b.bsInclude.bottomSheet;
+        bsb = BottomSheetBehavior.from(panel);
+        listAdapter = new ListaFragmentAdapter(position -> setContent(listAdapter.getItem(position)));
         b.lstLista.setHasFixedSize(true);
         b.lstLista.setLayoutManager(new GridLayoutManager(getContext(), getResources().getInteger(R.integer.lstLista_columns)));
         b.lstLista.setItemAnimator(new DefaultItemAnimator());
         b.lstLista.setAdapter(listAdapter);
-        //TODO fab nuevo libro
-//        b.listaFab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_empresasFragment_to_empresaFragment));
-        b.listaFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                vm.insert(new Libro("Libro1","Ken Follet","2015","portada","Esta sinopsis"));
-            }
-        });
+        b.listaFab.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_listaFragment_to_agregarFragment));
+        b.lblEmptyView.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_listaFragment_to_agregarFragment));
 
         //TODO snackbar de confirmacion
         // Se crea el helper.
@@ -85,10 +96,20 @@ public class ListaFragment extends Fragment {
                     // Cuando se detecta un gesto swipe to dismiss.
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                        bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
                         vm.delete(listAdapter.getItem(viewHolder.getAdapterPosition()));
                     }
+
+
                 });
         // Se enlaza con el RecyclerView.
         itemTouchHelper.attachToRecyclerView(b.lstLista);
+    }
+
+
+    private void setContent(Libro libro) {
+        bsb.setState(BottomSheetBehavior.STATE_EXPANDED);
+        b.bsInclude.bsTitulo.setText(libro.getTitulo());
+        b.bsInclude.bsSinopsis.setText(libro.getSinopsis().equals("")?"<Sinopsis no disponible>":libro.getSinopsis());
     }
 }

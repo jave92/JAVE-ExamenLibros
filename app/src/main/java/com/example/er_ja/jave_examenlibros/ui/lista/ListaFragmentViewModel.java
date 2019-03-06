@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 public class ListaFragmentViewModel extends ViewModel {
     private final Repository repository;
     LiveData<List<Libro>> libros;
+    Libro libro = null;
 
     public ListaFragmentViewModel(Repository repository) {
         this.repository = repository;
@@ -26,5 +27,17 @@ public class ListaFragmentViewModel extends ViewModel {
 
     public LiveData<List<Libro>> getLibros(){
         return libros;
+    }
+
+    public void setLibros(LiveData<List<Libro>> libros) {
+        this.libros = libros;
+    }
+
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
 }

@@ -37,6 +37,8 @@ dependencies {
     implementation 'android.arch.navigation:navigation-ui:1.0.0-rc02'
     //BottomSheet
     implementation "com.google.android.material:material:1.1.0-alpha03"
+    //TextInputLayout
+    implementation "com.google.android.material:material:1.0.0"
     //LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.1.0-alpha02"
     // For Room. X.X.X is version of room.

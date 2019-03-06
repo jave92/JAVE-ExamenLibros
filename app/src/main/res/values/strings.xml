@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Mis libros favoritos</string>
+    <string name="titulo_hint">Título</string>
+    <string name="autor_hint">Autor/a</string>
+    <string name="fecha_hint">Año de publicación</string>
+    <string name="portada_hint">URL Portada</string>
+    <string name="sinopsis_hint">Sinopsis</string>
+    <string name="main_required_field">Campo requerido</string>
+    <string name="main_no_students_yet">No hay libros</string>
+    <string name="preferencias_title">Preferencias</string>
+    <string name="main_fragment_confirm_deletion">Guardar libro</string>
+    <string name="main_fragment_yes">Si</string>
+    <string name="main_fragment_no">No</string>
+    <string name="main_fragment_sure">¿Estás seguro?</string>
 </resources>

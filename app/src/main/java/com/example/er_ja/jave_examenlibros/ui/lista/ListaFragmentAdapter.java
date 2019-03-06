@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.er_ja.jave_examenlibros.R;
+import com.example.er_ja.jave_examenlibros.RecyclerViewOnItemClickListener;
 import com.example.er_ja.jave_examenlibros.data.local.entity.Libro;
 
 import androidx.annotation.NonNull;
@@ -17,8 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ListaFragmentAdapter extends ListAdapter<Libro, ListaFragmentAdapter.ViewHolder> {
 
+    private final RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
 
-    public ListaFragmentAdapter() {
+    public ListaFragmentAdapter(RecyclerViewOnItemClickListener recyclerViewOnItemClickListener) {
         super(new DiffUtil.ItemCallback<Libro>() {
             @Override
             public boolean areItemsTheSame(@NonNull Libro oldItem, @NonNull Libro newItem) {
@@ -34,12 +36,13 @@ public class ListaFragmentAdapter extends ListAdapter<Libro, ListaFragmentAdapte
                         TextUtils.equals(oldItem.getSinopsis(), newItem.getSinopsis());
             }
         });
+        this.recyclerViewOnItemClickListener=recyclerViewOnItemClickListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_item, parent, false),recyclerViewOnItemClickListener);
     }
 
     @Override
@@ -57,21 +60,22 @@ public class ListaFragmentAdapter extends ListAdapter<Libro, ListaFragmentAdapte
         return super.getItem(position);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView lblTitulo, lblAutor, lblFecha;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, RecyclerViewOnItemClickListener recyclerViewOnItemClickListener) {
             super(itemView);
             lblTitulo = ViewCompat.requireViewById(itemView, R.id.lista_item_titulo);
             lblAutor = ViewCompat.requireViewById(itemView, R.id.lista_item_autor);
             lblFecha = ViewCompat.requireViewById(itemView, R.id.lista_item_fecha);
-        }
+            itemView.setOnClickListener(v -> recyclerViewOnItemClickListener.onItemClick(ViewHolder.this.getAdapterPosition()));        }
 
         void bind(Libro libro){
             lblTitulo.setText(libro.getTitulo());
             lblAutor.setText(libro.getAutor());
             lblFecha.setText(libro.getFecha());
         }
+
     }
 }

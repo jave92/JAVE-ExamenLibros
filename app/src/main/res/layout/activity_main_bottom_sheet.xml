@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.core.widget.NestedScrollView>
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="@dimen/main_padding"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        android:background="@color/translucent_grey"
+        app:behavior_peekHeight="@dimen/bottomSheet_peekHeight"
+        app:behavior_hideable="true">
+
+        <!-- Vistas contenidas en la BottomSheet -->
+        <!-- ... -->
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/main_padding">
+
+            <TextView
+                android:id="@+id/bsTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/main_padding"
+                android:paddingBottom="@dimen/main_padding"
+                android:textColor="@color/design_default_color_background"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bsSinopsis"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/design_default_color_background" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

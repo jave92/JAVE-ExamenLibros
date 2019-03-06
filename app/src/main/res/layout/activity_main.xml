@@ -37,6 +37,4 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/main_navigation"/>
     </LinearLayout>
-    <!--&lt;!&ndash; Bottom Sheet &ndash;&gt;-->
-    <!--<include layout="@layout/activity_main_bottom_sheet" />-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
