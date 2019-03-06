@@ -12,4 +12,5 @@
     <string name="main_fragment_yes">Si</string>
     <string name="main_fragment_no">No</string>
     <string name="main_fragment_sure">¿Estás seguro?</string>
+    <string name="deshacer">Deshacer</string>
 </resources>

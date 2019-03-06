@@ -13,6 +13,7 @@ import com.example.er_ja.jave_examenlibros.data.RepositoryImpl;
 import com.example.er_ja.jave_examenlibros.data.local.entity.Libro;
 import com.example.er_ja.jave_examenlibros.databinding.ListaFragmentBinding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -97,6 +98,9 @@ public class ListaFragment extends Fragment {
                     @Override
                     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                         bsb.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        vm.setLibro(listAdapter.getItem(viewHolder.getAdapterPosition()));
+                        Snackbar.make(b.listaFab, "Libro eliminado", Snackbar.LENGTH_LONG)
+                                .setAction(getString(R.string.deshacer), view -> vm.insert(vm.getLibro())).show();
                         vm.delete(listAdapter.getItem(viewHolder.getAdapterPosition()));
                     }
 
